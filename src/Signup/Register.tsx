@@ -1,30 +1,22 @@
 import React from 'react'
 import { useForm } from 'react-hook-form';
 import { TextField, Button, Typography } from '@mui/material';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { ToastContainer, toast } from "react-toastify";
 import { axiosPost } from '../Common/commonAPI';
 export const Register = () => {
 
-  // const navigate = useNavigate()
   const { register, handleSubmit, formState: { errors } }:any = useForm();
 
   const handleFormSubmit = async(data:any) => {
     try {
       const response: any = await axiosPost(data,"register");
-      console.log('response', response.status)
       if (response.status == 200) {
-        // window.localStorage.setItem("accessToken", response?.data?.accessToken);
-       return  alert("Login successful!");
-        // dispatch({ type: , payload: response?.data });
-        // navigate("/allBlogs");
+       return  toast.success("Login successful!");
       }
     } catch (error: any) {
-      if (error.response.status == 401) {
-        toast.error(error?.response?.data?.message);
+      return toast.error("error occured");
       }
-      // navigate("/");
-    }
   };
   return (
     <>
