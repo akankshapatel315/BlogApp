@@ -9,13 +9,12 @@ const axiosPost = (reqBody: any, url: string) => {
     axios
       .post(`http://localhost:3000/${url}`, reqBody, config)
       .then((response) => {
-        console.log("response", response);
         if (response.status === 200) {
-          return resolve(response);
+           resolve(response);
         }
       })
       .catch((error:any) => {
-        return reject(error);
+         reject(error);
       });
   });
 };
@@ -30,11 +29,11 @@ const axiosGet = (reqBody: any, url: string) => {
       .get(`http://localhost:3000/${url}`, config)
       .then((response) => {
         if (response.status === 200) {
-          return resolve(response);
+           resolve(response);
         }
       })
       .catch((error) => {
-        return reject(error);
+         reject(error);
       });
   });
 };

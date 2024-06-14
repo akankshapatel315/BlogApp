@@ -1,8 +1,10 @@
-const initialState = { userData: null };
+import { getUserDetails } from "../Actions/userActions";
+
+const initialState = { userData: "" };
 
 const userReducer = (state = initialState, action: any) => {
   switch (action.type) {
-    case "getUserDetails":
+    case getUserDetails:
       return { ...state, userData: action.payload };
     default:
       return state;

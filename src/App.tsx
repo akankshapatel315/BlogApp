@@ -10,25 +10,33 @@ import Login from "./Components/SignIn/Login";
 import { Register } from "./Signup/Register";
 import { ToastContainer } from "react-bootstrap";
 import { AllBlogs } from "./Components/Blog/AllBlogs";
+import { Blog } from "./Components/Blog/Blog";
+import { MyBlog } from "./Components/Blog/MyBlog";
 
 
 const PrivateRoute = ({ children }:any) => {
-  const auth = false
-  return auth ? children : <Navigate to="/login" replace />;
+   const token = localStorage.getItem("accessToken");
+  return token ? children : <Navigate to="/login" replace />;
 };
 
 function App() {
   return (
     <div className="App">
-       <ToastContainer/>
       <Header />
       <BrowserRouter>
+      <ToastContainer
+          
+        />
         <Routes>
           <Route path="/" element={<Login/>} />
           <Route path="/login" element={<Login/>} />
           <Route path="/signup" element={<Register/>} />
-          {/* <Route path="/myblogs" element={<PrivateRoute><AllBlog /></PrivateRoute>}/> */}
-          <Route path="/allblogs" element={<PrivateRoute><AllBlogs /></PrivateRoute>}/>
+          {/* <Route path="/allBlogs" element={<Blog/>} /> */}
+          {/* <Route path="/myBlogs" element={<MyBlog/>} /> */}
+
+          <Route path="/allBlogs" element={<PrivateRoute><Blog /></PrivateRoute>}/>
+          <Route path="/myBlogs" element={<PrivateRoute><MyBlog /></PrivateRoute>}/>
+
 
         </Routes>
       </BrowserRouter>

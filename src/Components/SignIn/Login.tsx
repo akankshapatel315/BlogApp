@@ -2,13 +2,36 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { TextField, Button, Typography } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { axiosPost } from '../../Common/commonAPI';
+import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
+import { getUserDetails } from '../../Actions/userActions';
 
 const Login = () => {
   const { register, handleSubmit, formState: { errors } } :any= useForm();
-
-  const handleFormSubmit = (data:any) => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const userDetails = useSelector((state: any) => {
+    console.log("state", state);
+  });
+  const handleFormSubmit = async (data:any) => {
   console.log(data);
+  try {
+    const response: any = await axiosPost(data,"login");
+    console.log('response', response.status)
+    if (response.status == 200) {
+      window.localStorage.setItem("accessToken", response?.data?.accessToken);
+       toast.success("Login successful!");
+      dispatch({ type: getUserDetails, payload: response?.data });
+      navigate("/allBlogs");
+    }
+  } catch (error: any) {
+    if (error.response.status == 401) {
+      toast.error(error?.response?.data?.message);
+    }
+    navigate("/");
+  }
   };
 
   return (

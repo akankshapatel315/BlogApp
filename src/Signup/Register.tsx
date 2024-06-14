@@ -1,13 +1,30 @@
 import React from 'react'
 import { useForm } from 'react-hook-form';
 import { TextField, Button, Typography } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from "react-toastify";
+import { axiosPost } from '../Common/commonAPI';
 export const Register = () => {
 
+  // const navigate = useNavigate()
   const { register, handleSubmit, formState: { errors } }:any = useForm();
 
-  const handleFormSubmit = (data:any) => {
-    console.log(data);
+  const handleFormSubmit = async(data:any) => {
+    try {
+      const response: any = await axiosPost(data,"register");
+      console.log('response', response.status)
+      if (response.status == 200) {
+        // window.localStorage.setItem("accessToken", response?.data?.accessToken);
+       return  alert("Login successful!");
+        // dispatch({ type: , payload: response?.data });
+        // navigate("/allBlogs");
+      }
+    } catch (error: any) {
+      if (error.response.status == 401) {
+        toast.error(error?.response?.data?.message);
+      }
+      // navigate("/");
+    }
   };
   return (
     <>
@@ -54,6 +71,8 @@ export const Register = () => {
         Already have an account? <Link to="/">Login now</Link>
       </Typography>
     </form>
+    <ToastContainer/>
+
     </>
   )
 }
