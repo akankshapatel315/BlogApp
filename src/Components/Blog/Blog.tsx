@@ -40,7 +40,7 @@ export const Blog = () => {
 
   async function getAllArticles() {
     try {
-      const response: any = await axiosGet({}, `getAllArticles`);
+      const response: any = await axiosGet({}, `getAllArticlesOfLoggedInUser`);
       if (response.status == 200) {
         setBlogs(response.data.articles);
       }

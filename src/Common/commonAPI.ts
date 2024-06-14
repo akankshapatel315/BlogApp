@@ -56,4 +56,24 @@ const axiosGetWithPrams = (params: any, url: string) => {
       });
   });
 };
+
+const axiosGetAll = (reqBody: any, url: string) => {
+  const token = localStorage.getItem("accessToken");
+  const config = {
+    headers: { "x-access-token": token },
+  };
+
+  return new Promise((resolve, reject) => {
+    axios
+      .get(`http://localhost:3000/`, config)
+      .then((response) => {
+        if (response.status === 200) {
+           resolve(response);
+        }
+      })
+      .catch((error) => {
+         reject(error);
+      });
+  });
+};
 export { axiosPost, axiosGet };
