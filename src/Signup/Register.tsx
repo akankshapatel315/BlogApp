@@ -12,7 +12,7 @@ export const Register = () => {
     try {
       const response: any = await axiosPost(data,"register");
       if (response.status == 200) {
-       return  toast.success("Login successful!");
+       return  toast.success("Registration successful!");
       }
     } catch (error: any) {
       return toast.error("error occured");
