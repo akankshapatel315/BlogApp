@@ -10,16 +10,16 @@ import EditIcon from "@mui/icons-material/Edit";
 import React, { useEffect, useState } from "react";
 import { axiosGet } from "../../Common/commonAPI";
 import { EditDeleteBlog } from "./EditDeleteBlog";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { AddBlog } from "./AddBlog";
 import * as Yup from "yup";
+import { getBlogs } from "../../Actions/blogActions";
 
 
 
 export const Blog = () => {
   const [modalShow, setModalShow] = React.useState(false);
   const [modalShowAdd, setModalShowAdd] = React.useState(false);
-
   const [blogs, setBlogs] = useState<any>([]);
   const [userId,setUserId] = useState<any>(null)
 
@@ -47,7 +47,8 @@ export const Blog = () => {
     }
   };
   const getUserInfo = useSelector((state:any)=> state.userData.userData)
-
+  const getBlogInfo = useSelector((state:any)=> state)
+  console.log('getBlogInfo', getBlogInfo)
 
   async function getAllArticles() {
     try {

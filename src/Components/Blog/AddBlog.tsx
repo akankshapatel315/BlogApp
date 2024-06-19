@@ -4,11 +4,11 @@ import { Button } from "@mui/material";
 import * as Yup from "yup";
 import { toast } from "react-toastify";
 import { axiosPost } from "../../Common/commonAPI";
-import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 export const AddBlog = (props: any) => {
   const { modalShow, handleModalVisible } = props;
-
+  
   const schema = Yup.object().shape({
     title: Yup.string().required(),
     description: Yup.string().required(),
@@ -32,11 +32,13 @@ export const AddBlog = (props: any) => {
       );
       if (response.status == 200) {
         toast.success("Article added successfully submitted with no errors!");
+        window.location.reload()
       } else {
         toast.error("Article is not added due to some issue !");
       }
       handleModalVisible();
     } catch (error: any) {
+      console.log('error', error)
       toast.warning("Please fill mandatory fields!");
     }
   }
