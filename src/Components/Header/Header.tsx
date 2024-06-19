@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { Button, Container, Nav, Navbar } from "react-bootstrap";
-import { Link, Navigate, useLocation } from "react-router-dom"; // Import Link, Navigate, and useLocation from react-router-dom
 import { useSelector } from "react-redux";
 import { AddBlog } from "../Blog/AddBlog";
 
 export const Header = () => {
+
   const [modalShow, setModalShow] = useState<boolean>(false);
+
   const handleModalVisible = () => setModalShow(!modalShow);
   const accessToken = useSelector(
     (state: any) => state.userData?.userData?.accessToken

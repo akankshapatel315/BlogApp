@@ -1,25 +1,30 @@
 import React from 'react'
 import { useForm } from 'react-hook-form';
 import { TextField, Button, Typography } from '@mui/material';
-import { Link } from 'react-router-dom';
-import { ToastContainer, toast } from "react-toastify";
+import { Link, useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import { axiosPost } from '../Common/commonAPI';
 export const Register = () => {
 
   const { register, handleSubmit, formState: { errors } }:any = useForm();
+  const navigate:any = useNavigate()
 
   const handleFormSubmit = async(data:any) => {
     try {
       const response: any = await axiosPost(data,"register");
       if (response.status == 200) {
-       return  toast.success("Registration successful!");
+         toast.success("Registration successful!");
+          navigate("/")
       }
     } catch (error: any) {
-      return toast.error("error occured");
+        toast.error("error occured");
       }
   };
   return (
     <>
+    <ToastContainer/>
      <form onSubmit={handleSubmit(handleFormSubmit)} style={{ maxWidth: 300, margin: 'auto' }}>
       <Typography variant="h5" align="center" gutterBottom>Sign Up</Typography>
       <TextField
@@ -63,7 +68,6 @@ export const Register = () => {
         Already have an account? <Link to="/">Login now</Link>
       </Typography>
     </form>
-    <ToastContainer/>
 
     </>
   )

@@ -11,19 +11,30 @@ import React, { useEffect, useState } from "react";
 import { axiosGet } from "../../Common/commonAPI";
 import { EditDeleteBlog } from "./EditDeleteBlog";
 import { useSelector } from "react-redux";
+import { AddBlog } from "./AddBlog";
+import * as Yup from "yup";
 
 
 
 export const Blog = () => {
   const [modalShow, setModalShow] = React.useState(false);
+  const [modalShowAdd, setModalShowAdd] = React.useState(false);
+
   const [blogs, setBlogs] = useState<any>([]);
   const [userId,setUserId] = useState<any>(null)
+
   const [editableBlogData, setEditableBlogData] = useState<any>({
     description: "",
     title: "",
     category: "",
     _id: "",
   });
+  const [addBlogData, setBlogData] = useState<any>({
+    description: "",
+    title: "",
+    category: "",
+  });
+  
   const handleModalVisible = () => setModalShow(!modalShow);
   const clearEditableBlogData = () =>
     setEditableBlogData({ description: "", title: "", category: "" });
@@ -50,9 +61,13 @@ export const Blog = () => {
       }
     }
   }
+
+
   useEffect(() => {
     getAllArticles();
-  }, []);
+  }, [modalShow]);
+
+
   const [isActive, setIsActive] = useState(false);
 
   const handleButtonClick = () => {
@@ -77,7 +92,6 @@ export const Blog = () => {
               />
               <CardContent>
                 <Typography variant="body2" color="text.secondary">
-                  {/* {blogData?.description} */}
                   {truncateText(blogData?.description, 80)}
                 </Typography>
               </CardContent>
@@ -110,6 +124,12 @@ export const Blog = () => {
         clearEditableBlogData={clearEditableBlogData}
         setEditableBlogData={setEditableBlogData}
       />
+      {/* <AddBlog
+        modalShowAdd={modalShowAdd}
+        handleModalVisible={handleModalVisible}
+        addBlogData={addBlogData}
+        setBlogData={setBlogData}
+      /> */}
     </div>
   );
 };
